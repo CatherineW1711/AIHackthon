@@ -1,0 +1,4 @@
+# Core dependencies for the project
+colorama==0.4.6  # Terminal color output (used in warp_assistant.py)
+Flask==2.3.2     # Required for Enhanced Flask REST API (web service)
+sqlalchemy==2.0.23  # Database support (commonly used with Flask)

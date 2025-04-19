@@ -4,7 +4,7 @@
 
 ### AI Code Generation Evolved | Smart Default Features | Better Developer Experience
 
-[![ML-Powered](https://img.shields.io/badge/ML_Powered-FF6B6B?style=for-the-badge)]
+[![ML-Powered](https://img.shields.io/badge/ML_Powered-FF6B6B?style=for-the-badge)](https://www.domo.com/learn/article/how-to-leverage-the-power-of-machine-learning#:~:text=Machine%20learning%20can%20replace%20human,current%20decision%20should%20be%20made.)
 [![Code Enhancement](https://img.shields.io/badge/Code_Enhancement-4ECDC4?style=for-the-badge)]
 [![PennHack25](https://img.shields.io/badge/PennHack25-FFE66D?style=for-the-badge)]
 

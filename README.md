@@ -4,9 +4,9 @@
 
 ### AI Code Generation Evolved | Smart Default Features | Better Developer Experience
 
-[![ML-Powered](https://img.shields.io/badge/ML_Powered-FF6B6B?style=for-the-badge)](https://github.com/yourusername/warp-enhancement)
-[![Code Enhancement](https://img.shields.io/badge/Code_Enhancement-4ECDC4?style=for-the-badge)](https://github.com/yourusername/warp-enhancement)
-[![PennHack25](https://img.shields.io/badge/PennHack25-FFE66D?style=for-the-badge)](https://github.com/yourusername/warp-enhancement)
+[![ML-Powered](https://img.shields.io/badge/ML_Powered-FF6B6B?style=for-the-badge)]
+[![Code Enhancement](https://img.shields.io/badge/Code_Enhancement-4ECDC4?style=for-the-badge)]
+[![PennHack25](https://img.shields.io/badge/PennHack25-FFE66D?style=for-the-badge)]
 
 </div>
 

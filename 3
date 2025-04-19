@@ -22,6 +22,32 @@ Usage:
   Then open http://localhost:5000/contacts in your browser or via curl.
 """
 
+Running in Warp Terminal:
+1. Open Warp and navigate to your project directory:
+     ```bash
+     cd /path/to/your/script
+     ```
+2. (Optional) Create and activate a virtual environment:
+     ```bash
+     python3 -m venv venv
+     source venv/bin/activate
+     ```
+3. Install dependencies:
+     ```bash
+     pip install flask
+     ```
+4. Start the Flask server:
+     ```bash
+     python enhanced_flask_api.py
+     ```
+5. Warp will display logs in the active pane. To test an endpoint, open a new pane (Option+Enter) and run:
+     ```bash
+     curl http://localhost:5000/contacts
+     ```
+6. You can split panes, search command history, and use Warp’s workflow commands for efficient management.
+
+"""
+
 from flask import Flask, request, jsonify
 import sqlite3
 import logging

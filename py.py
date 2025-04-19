@@ -7,7 +7,31 @@ This script demonstrates:
 2. Detecting missing default features in the code
 3. Suggesting and injecting template code for high‑importance features
 """
-
+# ──────────────────────────────────────────────────────────────────────────────
+# How to use this in Warp
+#
+# 1. (Optional) install into your $PATH:
+#      chmod +x warp_assistant.py
+#      mv warp_assistant.py /usr/local/bin/warp_assistant
+#
+# 2. In your shell rc (e.g. ~/.zshrc) add:
+#      alias wa='warp_assistant --file'
+#
+# 3. Reload your shell:
+#      source ~/.zshrc
+#
+# 4. Now in Warp just type:
+#      wa path/to/your_script.py
+#
+#    Or, without an alias:
+#      python3 warp_assistant.py --file path/to/your_script.py
+#
+# Warp will then open a new block showing:
+#   • Detected application type
+#   • Missing high‑importance features
+#   • Original vs. enhanced code snippets
+# So your actual input in Warp is simply: wa my_script.py
+# ──────────────────────────────────────────────────────────────────────────────
 import re
 import json
 import argparse
@@ -268,16 +292,7 @@ if __name__ == "__main__":
     main()
     
 
+
     
 
 
-
-这个演示展示了我们的系统如何:
-1. 自动识别不同类型的应用（游戏、GUI应用、CLI工具、Web应用等）
-2. 检测缺失的关键默认功能（如退出选项、关闭按钮、帮助命令、错误处理等）
-3. 智能地向代码中添加这些功能
-4. 提供相关的实现建议和注释
-
-在实际的Warp集成中，这个过程将无缝进行，为用户生成更完整、更用户友好的代码。
-系统会随着时间学习哪些默认功能对不同类型的应用是必要的，从而不断改进其推荐。
-    """)

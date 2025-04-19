@@ -2,17 +2,24 @@
 # -*- coding: utf-8 -*-
 
 """
-增强版21点游戏示例
-================
+Enhanced Blackjack Game
+=======================
 
-这个脚本实现了一个带有退出、暂停和重新开始功能的命令行21点游戏。
+This script implements a command-line Blackjack game with complete user experience features:
+  - Exit option: Players can quit the game at any time
+  - Pause function: Game can be paused during play
+  - Restart option: Players can restart the game without exiting
+  - Help menu: Comprehensive instructions available
+  - Score tracking: Wins, losses, and draws are tracked across sessions
+
+This demonstrates how proper default features enhance user experience in game applications.
 """
 
 import random
 import os
 import time
 
-# 游戏变量
+# Game variables
 player_cards = []
 dealer_cards = []
 game_over = False
@@ -24,18 +31,29 @@ losses = 0
 draws = 0
 
 def clear_screen():
-    """清屏"""
+    """Clear the terminal screen for better user experience."""
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def deal_card():
-    """返回一张随机牌"""
+    """Return a random card from the deck.
+    
+    Returns:
+        int: Card value (Ace=11, face cards=10)
+    """
     cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
     return random.choice(cards)
 
 def calculate_score(cards):
-    """计算手牌得分"""
+    """Calculate the score of a hand, handling Aces appropriately.
+    
+    Args:
+        cards (list): List of card values
+        
+    Returns:
+        int: Score value (0 = Blackjack)
+    """
     if sum(cards) == 21 and len(cards) == 2:
-        return 0  # 黑杰克 (A + 10)
+        return 0  # Blackjack (Ace + 10)
     
     if 11 in cards and sum(cards) > 21:
         cards.remove(11)
@@ -44,72 +62,84 @@ def calculate_score(cards):
     return sum(cards)
 
 def display_cards():
-    """显示玩家和庄家的牌"""
+    """Display the current game state including scores and cards."""
     clear_screen()
     print("=" * 50)
-    print("21点游戏".center(50))
+    print("BLACKJACK".center(50))
     print("=" * 50)
-    print(f"战绩: {wins}胜 {losses}负 {draws}平")
+    print(f"Score: {wins} Wins, {losses} Losses, {draws} Draws")
     print("-" * 50)
     
-    print("你的牌:", player_cards)
-    print("你的得分:", player_score)
+    print("Your cards:", player_cards)
+    print("Your score:", player_score)
     print()
     
     if game_over:
-        print("庄家的牌:", dealer_cards)
-        print("庄家得分:", dealer_score)
+        print("Dealer's cards:", dealer_cards)
+        print("Dealer's score:", dealer_score)
     else:
-        print(f"庄家的牌: [{dealer_cards[0]}, ?]")
-        print(f"庄家可见得分: {dealer_cards[0]}")
+        print(f"Dealer's cards: [{dealer_cards[0]}, ?]")
+        print(f"Dealer's visible score: {dealer_cards[0]}")
     
     print("-" * 50)
 
 def compare(user_score, computer_score):
-    """比较玩家和电脑的分数"""
+    """Compare player and dealer scores to determine the winner.
+    
+    Args:
+        user_score (int): Player's score
+        computer_score (int): Dealer's score
+        
+    Returns:
+        str: Result message
+    """
     global wins, losses, draws
     
     if user_score == computer_score:
         draws += 1
-        return "平局！"
+        return "Draw!"
     elif computer_score == 0:
         losses += 1
-        return "你输了，庄家有黑杰克！"
+        return "You lose! Dealer has Blackjack."
     elif user_score == 0:
         wins += 1
-        return "你赢了，你有黑杰克！"
+        return "You win! You have Blackjack!"
     elif user_score > 21:
         losses += 1
-        return "你输了，爆牌了！"
+        return "You lose! You went over 21."
     elif computer_score > 21:
         wins += 1
-        return "你赢了，庄家爆牌了！"
+        return "You win! Dealer went over 21."
     elif user_score > computer_score:
         wins += 1
-        return "你赢了！"
+        return "You win!"
     else:
         losses += 1
-        return "你输了！"
+        return "You lose!"
 
 def pause_game():
-    """暂停游戏"""
+    """Pause the game until user input is received."""
     global paused
     paused = True
-    print("游戏已暂停。按Enter键继续...")
+    print("Game paused. Press Enter to continue...")
     input()
     paused = False
     display_cards()
 
 def play_game():
-    """开始游戏"""
+    """Main game loop handling player actions and game logic.
+    
+    Returns:
+        bool: True to play again, False to exit
+    """
     global player_cards, dealer_cards, game_over, player_score, dealer_score
     
-    # 重置游戏
+    # Reset game state
     player_cards = []
     dealer_cards = []
     game_over = False
     
-    # 发两张牌给玩家和庄家
+    # Deal initial cards
     for _ in range(2):
         player_cards.append(deal_card())
         dealer_cards.append(deal_card())
@@ -119,7 +149,7 @@ def play_game():
     
     display_cards()
     
-    # 玩家回合
+    # Player's turn
     while not game_over:
         if paused:
             time.sleep(0.1)
@@ -131,7 +161,7 @@ def play_game():
         if player_score == 0 or dealer_score == 0 or player_score > 21:
             game_over = True
         else:
-            print("操作: [H]要牌 [S]停牌 [P]暂停 [Q]退出 [R]重新开始")
+            print("Actions: [H]it, [S]tand, [P]ause, [Q]uit, [R]estart")
             choice = input("> ").lower()
             
             if choice == 'h':
@@ -144,16 +174,16 @@ def play_game():
             elif choice == 'p':
                 pause_game()
             elif choice == 'q':
-                print("感谢游玩！")
-                return False  # 退出游戏
+                print("Thanks for playing!")
+                return False  # Exit game
             elif choice == 'r':
-                return True  # 重新开始游戏
+                return True  # Restart game
             else:
-                print("无效操作，请重试。")
+                print("Invalid action. Please try again.")
                 time.sleep(1)
                 display_cards()
     
-    # 庄家回合
+    # Dealer's turn
     while dealer_score != 0 and dealer_score < 17 and player_score <= 21:
         dealer_cards.append(deal_card())
         dealer_score = calculate_score(dealer_cards)
@@ -162,65 +192,71 @@ def play_game():
     result = compare(player_score, dealer_score)
     print(result)
     
-    # 询问是否继续
-    print("操作: [Y]再来一局 [N]退出游戏")
+    # Ask to play again
+    print("Actions: [Y]es play again, [N]o quit game")
     while True:
         choice = input("> ").lower()
         if choice == 'y':
-            return True  # 继续游戏
+            return True  # Continue playing
         elif choice == 'n':
-            print("感谢游玩！")
-            return False  # 退出游戏
+            print("Thanks for playing!")
+            return False  # Exit game
         else:
-            print("无效操作，请输入Y或N")
+            print("Invalid action. Please enter Y or N")
 
 def display_help():
-    """显示帮助信息"""
+    """Display game rules and controls."""
     clear_screen()
     print("=" * 50)
-    print("21点游戏帮助".center(50))
+    print("BLACKJACK HELP".center(50))
     print("=" * 50)
-    print("游戏规则:")
-    print("1. 你和庄家各自获得两张牌")
-    print("2. 牌面点数2-10按原值计算，J/Q/K计为10点，A可以计为1或11点")
-    print("3. 目标是使手牌总点数尽可能接近21点而不超过21点")
-    print("4. 庄家必须在点数小于17时继续要牌")
-    print("5. 如果你的手牌超过21点，你立即输掉本局")
-    print("\n操作方法:")
-    print("  H - 要牌")
-    print("  S - 停牌")
-    print("  P - 暂停游戏")
-    print("  Q - 退出游戏")
-    print("  R - 重新开始")
-    print("\n按Enter键返回游戏...")
+    print("Game Rules:")
+    print("1. You and the dealer each receive two cards")
+    print("2. Cards 2-10 are worth their face value")
+    print("3. Face cards (J/Q/K) are worth 10 points")
+    print("4. Aces are worth 11 or 1 points (automatically adjusted)")
+    print("5. The goal is to get as close to 21 as possible without exceeding it")
+    print("6. The dealer must hit until they have at least 17 points")
+    print("7. If you exceed 21 points, you lose immediately")
+    print("\nControls:")
+    print("  H - Hit (take another card)")
+    print("  S - Stand (end your turn)")
+    print("  P - Pause game")
+    print("  Q - Quit game")
+    print("  R - Restart game")
+    print("\nPress Enter to return to the game...")
     input()
 
 def show_welcome():
-    """显示欢迎信息和主菜单"""
+    """Display welcome screen and main menu.
+    
+    Returns:
+        bool: True to start game, False to exit
+    """
     clear_screen()
     print("=" * 50)
-    print("欢迎来到21点游戏".center(50))
+    print("WELCOME TO BLACKJACK".center(50))
     print("=" * 50)
-    print("\n[1] 开始游戏")
-    print("[2] 游戏帮助")
-    print("[3] 退出游戏")
+    print("\n[1] Start Game")
+    print("[2] Help")
+    print("[3] Exit")
     
-    choice = input("\n请选择: ")
+    choice = input("\nSelect an option: ")
     if choice == '1':
         return True
     elif choice == '2':
         display_help()
         return show_welcome()
     elif choice == '3':
-        print("感谢您的兴趣，再见！")
+        print("Thanks for your interest. Goodbye!")
         return False
     else:
-        print("无效选择，请重试。")
+        print("Invalid selection. Please try again.")
         time.sleep(1)
         return show_welcome()
 
 def main():
-    """主函数"""
+    """Main program entry point."""
     if not show_welcome():
         return
     
@@ -232,4 +268,4 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\n游戏被中断。感谢游玩！")
+        print("\nGame interrupted. Thanks for playing!")

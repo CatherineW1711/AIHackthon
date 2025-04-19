@@ -56,7 +56,13 @@ Our project bridges this gap through machine learning that automatically identif
 
 3. **Strategic Integration**: Missing features are integrated at appropriate changes with stylistic consistency
 
-5. **Feedback Loop**: The system continuously improves by tracking which auto-added features users keep
+4. **Feedback Loop**: The system continuously improves by tracking which auto-added features users keep
+
+## 📚 Documentation
+
+- [How to Use the Framework](docs/framework-usage-guide.md)
+- [How to Add New Application Types](docs/adding-app-types.md)
+- [How to Define New Default Feature Templates](docs/custom-feature-templates.md)
 
 ## 💡 Why It Matters
 

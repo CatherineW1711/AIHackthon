@@ -1,38 +1,10 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-", 
-        "logging": """
-# 添加日志记录
-import logging
-
-# 配置日志
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler("app.log"),
-        logging.StreamHandler()
-    ]
-)
-logger = logging.getLogger(__name__)
-
-# 在应用启动时添加:
-# logger.info("应用启动")
-# 在路由中添加:
-# logger.info(f"请求: {request.method} {request.path}")
-"""
-    }
-}"
-默认功能自动添加演示脚本
-===========================
-
-这个脚本演示了如何使用机器学习和代码分析技术来检测并自动添加缺失的默认功能到游戏代码中。
-演示包括:
-1. 应用类型分类
-2. 缺失功能检测
-3. 代码增强
-"""
+###########################
+# This script demonstrates how to use machine learning and code analysis techniques to detect and automatically add missing default functions to complete codes.
+# The demonstrations include:
+# 1. Classification of Application type 
+# 2. Detection of missing functions
+# 3. Code enhancement
+###########################
 
 import re
 import json
@@ -43,10 +15,10 @@ import ast
 import numpy as np
 from colorama import Fore, Style, init
 
-# 初始化colorama
+# Initialize colorama
 init()
 
-# 模拟训练好的分类器
+# Define模拟训练好的分类器
 class MockClassifier:
     """模拟一个训练好的应用类型分类器"""
     

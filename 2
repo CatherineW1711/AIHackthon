@@ -19,6 +19,37 @@ Usage examples:
   $ python filetool.py --version
 """
 
+Running in Warp Terminal:
+1. Open Warp and navigate to the directory containing this script:
+     ```bash
+     cd /path/to/your/script
+     ```
+2. (Optional) Create and activate a virtual environment:
+     ```bash
+     python3 -m venv venv
+     source venv/bin/activate
+     ```
+3. Install dependencies (none beyond Python standard library). If you still
+   want to ensure argparse is available:
+     ```bash
+     pip install argparse
+     ```
+4. To list files in the current directory in a split pane, press Option+Enter to
+   open a new pane and run:
+     ```bash
+     python filetool.py list .
+     ```
+5. To search for a keyword across files in a directory:
+     ```bash
+     python filetool.py search keyword /path/to/search
+     ```
+6. To copy a file from one location to another:
+     ```bash
+     python filetool.py copy source.txt destination.txt
+     ```
+7. Use Warp’s pane splitting, session search, and command palette to streamline
+   repeated operations and review command history.
+
 import os
 import sys
 import shutil

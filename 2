@@ -2,10 +2,21 @@
 # -*- coding: utf-8 -*-
 
 """
-增强版命令行工具示例
-====================
+File Management CLI Tool
+========================
 
-这个脚本演示了带有基本功能和默认功能(如帮助和版本)的命令行工具。
+This script provides a simple command‑line interface (CLI) for basic file operations:
+  - list:     List all files and subdirectories in a given directory, showing their
+              last modification time and size.
+  - search:   Search for files whose names contain a given keyword.
+  - copy:     Copy a file from a source path to a destination path.
+  - version:  Display the tool’s version information.
+
+Usage examples:
+  $ python filetool.py list /path/to/dir
+  $ python filetool.py search report .
+  $ python filetool.py copy data.csv backup/data.csv
+  $ python filetool.py --version
 """
 
 import os
@@ -14,84 +25,119 @@ import shutil
 import time
 import argparse
 
-# 版本信息
+# Version information
 VERSION = "1.0.0"
 
-def list_files(directory='.'):
-    """列出指定目录下的所有文件"""
-    print(f"目录 {directory} 中的文件:")
-    for item in os.listdir(directory):
-        item_path = os.path.join(directory, item)
-        last_modified = time.ctime(os.path.getmtime(item_path))
-        size = os.path.getsize(item_path)
-        
-        if os.path.isdir(item_path):
-            print(f"[DIR]  {item:30} {last_modified:30} {size:10} bytes")
-        else:
-            print(f"[FILE] {item:30} {last_modified:30} {size:10} bytes")
+def list_files(directory='.') -> None:
+    """
+    List all files and directories in the specified directory.
+    Shows each item’s type ([FILE] or [DIR]), name, last modified timestamp, and size in bytes.
+    """
+    print(f"Contents of directory: {directory}")
+    try:
+        for entry in os.listdir(directory):
+            path = os.path.join(directory, entry)
+            last_modified = time.ctime(os.path.getmtime(path))
+            size = os.path.getsize(path)
 
-def search_files(keyword, directory='.'):
-    """搜索包含关键词的文件"""
-    print(f"搜索包含 '{keyword}' 的文件:")
+            if os.path.isdir(path):
+                print(f"[DIR]  {entry:30} {last_modified:30} {size:10} bytes")
+            else:
+                print(f"[FILE] {entry:30} {last_modified:30} {size:10} bytes")
+    except Exception as e:
+        print(f"Error listing directory '{directory}': {e}")
+
+def search_files(keyword: str, directory='.') -> None:
+    """
+    Search for files in the given directory (and subdirectories) whose names contain the keyword.
+    Prints each matching file’s path.
+    """
+    print(f"Searching for files containing '{keyword}' in: {directory}")
     found = False
-    
-    for root, _, files in os.walk(directory):
-        for file in files:
-            if keyword.lower() in file.lower():
-                file_path = os.path.join(root, file)
-                print(f"找到: {file_path}")
-                found = True
-    
-    if not found:
-        print(f"没有找到包含 '{keyword}' 的文件")
 
-def copy_file(source, destination):
-    """复制文件"""
+    for root, _, files in os.walk(directory):
+        for filename in files:
+            if keyword.lower() in filename.lower():
+                filepath = os.path.join(root, filename)
+                print(f"Found: {filepath}")
+                found = True
+
+    if not found:
+        print(f"No files found containing '{keyword}'.")
+
+def copy_file(source: str, destination: str) -> None:
+    """
+    Copy a file from source to destination, preserving metadata.
+    """
     try:
         shutil.copy2(source, destination)
-        print(f"已复制: {source} -> {destination}")
+        print(f"Copied: {source} -> {destination}")
     except Exception as e:
-        print(f"复制失败: {e}")
+        print(f"Failed to copy '{source}' to '{destination}': {e}")
 
-def show_version():
-    """显示版本信息"""
-    print(f"文件工具 v{VERSION}")
+def show_version() -> None:
+    """
+    Print the tool’s version and copyright.
+    """
+    print(f"File Management CLI Tool v{VERSION}")
     print("Copyright (c) 2025")
 
-def main():
-    """主函数"""
-    # 使用argparse进行命令行解析
-    parser = argparse.ArgumentParser(description="文件管理工具")
-    subparsers = parser.add_subparsers(dest="command", help="可用命令")
-    
-    # 定义list命令
-    list_parser = subparsers.add_parser("list", help="列出文件")
-    list_parser.add_argument("directory", nargs="?", default=".", help="要列出的目录")
-    
-    # 定义search命令
-    search_parser = subparsers.add_parser("search", help="搜索文件")
-    search_parser.add_argument("keyword", help="搜索关键词")
-    search_parser.add_argument("directory", nargs="?", default=".", help="搜索目录")
-    
-    # 定义copy命令
-    copy_parser = subparsers.add_parser("copy", help="复制文件")
-    copy_parser.add_argument("source", help="源文件")
-    copy_parser.add_argument("destination", help="目标路径")
-    
-    # 定义version命令
-    version_parser = subparsers.add_parser("version", help="显示版本信息")
-    
-    # 也可以使用-v或--version选项
-    parser.add_argument("-v", "--version", action="store_true", help="显示版本信息")
-    
-    # 解析参数
+def main() -> None:
+    """
+    Parse command‑line arguments and dispatch to the appropriate function:
+      - list
+      - search
+      - copy
+      - version (also via -v / --version)
+    """
+    parser = argparse.ArgumentParser(
+        description="File Management CLI Tool",
+        formatter_class=argparse.RawTextHelpFormatter
+    )
+    subparsers = parser.add_subparsers(dest="command", help="Available commands")
+
+    # 'list' command
+    list_parser = subparsers.add_parser("list", help="List files in a directory")
+    list_parser.add_argument(
+        "directory",
+        nargs="?",
+        default=".",
+        help="Directory to list (default: current directory)"
+    )
+
+    # 'search' command
+    search_parser = subparsers.add_parser("search", help="Search for files by keyword")
+    search_parser.add_argument("keyword", help="Keyword to search for in filenames")
+    search_parser.add_argument(
+        "directory",
+        nargs="?",
+        default=".",
+        help="Directory to search (default: current directory)"
+    )
+
+    # 'copy' command
+    copy_parser = subparsers.add_parser("copy", help="Copy a file")
+    copy_parser.add_argument("source", help="Path to the source file")
+    copy_parser.add_argument("destination", help="Destination path")
+
+    # 'version' command
+    subparsers.add_parser("version", help="Show version information")
+
+    # Also allow -v / --version
+    parser.add_argument(
+        "-v", "--version",
+        action="store_true",
+        help="Show version information and exit"
+    )
+
     args = parser.parse_args()
-    
-    # 处理命令
+
+    # If the version flag is present, show version and exit
     if args.version:
         show_version()
         return
-        
+
+    # Dispatch based on the subcommand
     if args.command == "list":
         list_files(args.directory)
     elif args.command == "search":
@@ -100,7 +146,7 @@ def main():
         copy_file(args.source, args.destination)
     elif args.command == "version":
         show_version()
-    elif args.command is None:
+    else:
         parser.print_help()
 
 if __name__ == "__main__":

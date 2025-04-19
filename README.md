@@ -1,4 +1,4 @@
-# 🧠 DevMind: Make AI Thinks Like a Human Developer 🧠
+# 🧠 DevMind: Make AI Thinks Like a Human Developer ––– For WARP🧠
 
 <div align="center">
 
@@ -12,7 +12,7 @@
 
 ## 🚀 The Problem
 
-When AI generates code, it often misses essential default features:
+When AI generates code, it often misses essential default features on WARP Platform:
 - Games without exit buttons
 - GUI apps without close functions
 - CLI tools without help commands

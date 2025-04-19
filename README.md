@@ -19,6 +19,8 @@ When AI generates code, it often misses essential default features on WARP Platf
 
 **This happens because AI doesn't understand developers' implicit expectations.**
 
+For now, Warp does not currently have the plugin function, so we have built an intelligent command/code analysis engine, which can serve as the prototype of the future Warp plugin system - it understands the Python scripts or commands that users run in the terminal and provides real-time enhancement suggestions (such as help commands, error handling, exit logic, etc.)
+
 Our project bridges this gap through machine learning that automatically identifies and adds these "obvious but often overlooked" features.
 
 ## ✨ Core Features

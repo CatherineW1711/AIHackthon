@@ -1,4 +1,4 @@
-# 🧠 DevMind: AI That Thinks Like a Developer 🧠
+# 🧠 DevMind: Make AI Thinks Like a Human Developer 🧠
 
 <div align="center">
 

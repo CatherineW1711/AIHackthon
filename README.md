@@ -1,4 +1,4 @@
-# ✨ WARP-Intelligent Default Features Enhancement ✨
+# 🧠 DevMind: AI That Thinks Like a Developer 🧠
 
 <div align="center">
 
